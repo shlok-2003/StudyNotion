@@ -1,16 +1,22 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import chalk from "chalk";
 
-exports.connect = () => {
+dotenv.config();
+
+const dbConnect = () => {
     mongoose
         .connect(process.env.MONGODB_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-        .then(() => console.log(`MongoDB Connected`))
+        .then(() => {
+            console.log(chalk.blue('MongoDB connected'));
+        })
         .catch((err) => {
-            console.error('Error in connecting to database: ', err);
-            console.log('Error in connecting to database: ', err);
-            process.exit(1);
+            console.log(chalk.red(`Error in connecting to MongoDB: ${err}`));
+            throw err;
         });
-};
+}
+
+export default dbConnect;

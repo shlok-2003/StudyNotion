@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const ProfileSchema = new mongoose.Schema(
     {
@@ -6,7 +6,7 @@ const ProfileSchema = new mongoose.Schema(
             type: String,
             enum: ['Male', 'Female', 'Prefer not to say'],
         },
-        dateOfBirth: {
+        dob: {
             type: String,
         },
         about: {
@@ -24,4 +24,4 @@ const ProfileSchema = new mongoose.Schema(
 );
 
 const Profile = mongoose.model('Profile', ProfileSchema);
-module.exports = Profile;
+export default Profile;

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const chalk = require('chalk');
-const mailSender = require('../utils/mailSender');
+import mongoose from 'mongoose';
+import chalk from 'chalk';
+import mailSender from '../utils/mailSender.js';
 
 const OTPSchema = new mongoose.Schema(
     {
@@ -24,22 +24,24 @@ const OTPSchema = new mongoose.Schema(
     },
 );
 
-async function sendVerificationEmail(email, otp) {
+OTPSchema.pre('save', async function (next) {
+    const doc = this;
+
     try {
         const mailResponse = await mailSender(
-            email,
+            doc.email,
             'Verification code for the StudyNotion App',
+            doc.otp,
         );
-        console.log('mailResponse is: ', mailResponse);
-    } catch (err) {
-        console.log(chalk.blue('Error in sending verification email: '), err);
-    }
-}
 
-OTPSchema.pre('save', async function (next) {
-    await sendVerificationEmail(this.email, this.otp);
+        console.log(chalk.green(`mailResponse is: ${mailResponse}`));
+    } catch (err) {
+        //! return
+        console.log(chalk.red(`Error in sending verification email: ${err}`));
+    }
+
     next();
 });
 
 const OTP = mongoose.model('Tag', OTPSchema);
-module.exports = OTP;
+export default OTP;
