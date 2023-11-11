@@ -1,24 +1,29 @@
 import express from 'express';
 const router = express.Router();
 
-import User from '../models/User.js';
+import { sendOTP, login, signUp, changePassword } from '../controllers/auth/index.js';
+import { verifyToken, updateRole } from '../middlewares/auth.js';
+import { resetPassword, resetPasswordToken } from '../controllers/resetPassword.js';
 
-router.post('/post', async (req, res) => {
-    const { firstName, lastName, email, password, accountType, image, additionalDetails } = req.body;
+// For login
+router.post('/login', login);
 
-    const user = await User.create({
-        firstName,
-        lastName,
-        email,
-        password,
-        accountType,
-        image,
-        additionalDetails,
-    });
+// For signup
+router.post('/signup', signUp);
 
-    console.log(user);
+// For sending OTP
+router.post('/send-otp', sendOTP);
 
-    res.json({ user });
-})
+// For changing password
+router.post('/change-password', verifyToken, changePassword);
+
+// Reset Password
+router.post('/reset-password', resetPasswordToken);
+
+// Update Password
+router.post('/update-password', resetPassword);
+
+// For updating role
+router.post('/update-role', verifyToken, updateRole);
 
 export default router;
