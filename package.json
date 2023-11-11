@@ -1,0 +1,38 @@
+{
+    "name": "study-notion",
+    "version": "1.0.0",
+    "description": "A learning management system",
+    "main": "index.js",
+    "scripts": {
+        "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client:start\" \"npm run server:start\"",
+        "client-install": "npm install --prefix client",
+        "server-install": "npm install --prefix server",
+        "prettier:fix": "prettier --write ./",
+        "client:start": "cd client && npm run dev",
+        "server:start": "cd server && npm run dev",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "engines": {
+        "node": "18.16.0",
+        "npm": "9.5.1"
+    },
+    "keywords": [
+        "react",
+        "express",
+        "node",
+        "mongodb",
+        "mongoose",
+        "axios",
+        "learning management system",
+        "lms"
+    ],
+    "author": "https://github.com/shlok-2003",
+    "license": "ISC",
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    },
+    "devDependencies": {
+        "morgan": "^1.10.0",
+        "prettier": "^3.0.3"
+    }
+}
