@@ -9,6 +9,8 @@ lerna-debug.log*
 
 client/node_modules
 server/node_modules
+node_modules
+
 dist
 dist-ssr
 *.local
@@ -26,3 +28,6 @@ dist-ssr
 
 server/.env
 client/.env
+server/uploads/*
+
+.prettierrc.json
