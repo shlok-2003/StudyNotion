@@ -7,6 +7,12 @@ const RatingAndReviewSchema = new mongoose.Schema(
             ref: 'User',
             required: true,
         },
+        course: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course',
+            index: true,
+            required: true,
+        },
         rating: {
             type: Number,
             required: true,
@@ -19,7 +25,9 @@ const RatingAndReviewSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    },
+    }
 );
 
-export default RatingAndReviewSchema;
+const RatingAndReviews = mongoose.model('RatingAndReview', RatingAndReviewSchema);
+
+export default RatingAndReviews;

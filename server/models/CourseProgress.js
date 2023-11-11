@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const CourseProgressSchema = new mongoose.Schema(
     {
@@ -15,7 +15,7 @@ const CourseProgressSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    },
+    }
 );
 
 const CourseProgress = mongoose.model('CourseProgress', CourseProgressSchema);
