@@ -1,11 +1,13 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import chalk from "chalk";
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import chalk from 'chalk';
 
 dotenv.config();
 
-const dbConnect = () => {
-    mongoose
+const dbConnect = async () => {
+    mongoose.set('strictQuery', true);
+
+    await mongoose
         .connect(process.env.MONGODB_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
@@ -15,8 +17,8 @@ const dbConnect = () => {
         })
         .catch((err) => {
             console.log(chalk.red(`Error in connecting to MongoDB: ${err}`));
-            throw err;
+            process.exit(1);
         });
-}
+};
 
 export default dbConnect;
