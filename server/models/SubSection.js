@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const SubSectionSchema = new mongoose.Schema(
     {
@@ -14,13 +14,10 @@ const SubSectionSchema = new mongoose.Schema(
         video: {
             type: String,
         },
-        document: {
-            type: String,
-        },
     },
     {
         timestamps: true,
-    },
+    }
 );
 
 const SubSection = mongoose.model('SubSection', SubSectionSchema);

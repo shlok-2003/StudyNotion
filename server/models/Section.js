@@ -15,7 +15,7 @@ const SectionSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    },
+    }
 );
 
 const Section = mongoose.model('Section', SectionSchema);
