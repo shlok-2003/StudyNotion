@@ -4,3 +4,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body {
+    overflow-x: hidden;
+}
+
+@layer components {
+    .txt-gradient-blue {
+        @apply bg-gradient-to-r from-gradient-blue-700 from-10% via-gradient-blue-700 via-70% to-gradient-green-500 to-100% bg-clip-text text-transparent;
+    }
+}
