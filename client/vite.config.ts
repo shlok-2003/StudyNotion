@@ -9,6 +9,14 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
+            '@components/core': path.resolve(
+                __dirname,
+                './src/components/ui/core',
+            ),
+            '@components/common': path.resolve(
+                __dirname,
+                './src/components/ui/common',
+            ),
         },
     },
 });
