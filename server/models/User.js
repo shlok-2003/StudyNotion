@@ -66,7 +66,7 @@ const UserSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 );
 
 UserSchema.pre('save', async function (next) {
@@ -137,13 +137,15 @@ UserSchema.methods = {
                     .findByIdAndUpdate(
                         { _id: courseId },
                         { $pull: { studentsEnrolled: this._id } },
-                        { new: true }
+                        { new: true },
                     );
-            })
+            }),
         );
         console.log(courses);
 
-        await mongoose.model('Profile').findByIdAndDelete({ _id: this.additionalDetails });
+        await mongoose
+            .model('Profile')
+            .findByIdAndDelete({ _id: this.additionalDetails });
         console.log(chalk.green('Deleted profile and courses'));
     },
 };
@@ -160,7 +162,7 @@ export default User;
 //     }
 
 //     if (await bcrypt.compare(password, user.password)) {
-    //         console.log(chalk.green('Password matched'));
+//         console.log(chalk.green('Password matched'));
 //         return true;
 //     } else {
 //         console.log(chalk.red('Password not matched'));
@@ -169,9 +171,9 @@ export default User;
 // });
 
 // UserSchema.static('getPayload', async function (email) {
-    //     const user = await this.findOne({ email });
+//     const user = await this.findOne({ email });
 
-    //     const payload = {
+//     const payload = {
 //         id: user._id,
 //         email: email,
 //         role: user.accountType,

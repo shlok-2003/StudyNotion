@@ -10,13 +10,34 @@ dotenv.config();
 
 export const createCourse = async (req, res, next) => {
     try {
-        const { name, description, whatYouWillLearn, status, instructions, price, tag, category } =
-            req.body;
+        const {
+            name,
+            description,
+            whatYouWillLearn,
+            status,
+            instructions,
+            price,
+            tag,
+            category,
+        } = req.body;
         const thumbnail = req.files.file;
 
         // ! tag should be add or not
-        if (!name || !description || !whatYouWillLearn || !price || !thumbnail || !category) {
-            return next(new AppError(false, 400, 'All fields are required to create a course'));
+        if (
+            !name ||
+            !description ||
+            !whatYouWillLearn ||
+            !price ||
+            !thumbnail ||
+            !category
+        ) {
+            return next(
+                new AppError(
+                    false,
+                    400,
+                    'All fields are required to create a course',
+                ),
+            );
         }
 
         const userId = req.user.id;
@@ -34,7 +55,10 @@ export const createCourse = async (req, res, next) => {
             return next(new AppError(false, 404, 'Category not found'));
         }
 
-        const thumbnailUpload = await uploader(thumbnail, process.env.FOLDER_NAME);
+        const thumbnailUpload = await uploader(
+            thumbnail,
+            process.env.FOLDER_NAME,
+        );
         console.log(chalk.green(thumbnailUpload));
 
         const allTags = tag.split(',').map((tag) => tag.trim()); //! Needs to be updated later
@@ -55,12 +79,16 @@ export const createCourse = async (req, res, next) => {
         await User.findByIdAndUpdate(
             { _id: userId },
             { $push: { courses: course._id } },
-            { new: true }
+            { new: true },
         );
 
-        return res.status(201).json(AppSuccess(true, 'Course created successfully', { course }));
+        return res
+            .status(201)
+            .json(AppSuccess(true, 'Course created successfully', { course }));
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating course', err.message));
+        return next(
+            new AppError(false, 500, 'Error in creating course', err.message),
+        );
     }
 };
 
@@ -78,7 +106,7 @@ export const getAllCourse = async (req, res, next) => {
                 category: true,
                 ratingAndReviews: true,
                 studentsEnrolled: true,
-            }
+            },
         )
             .populate({
                 path: 'instructor',
@@ -101,10 +129,17 @@ export const getAllCourse = async (req, res, next) => {
         return res.status(200).json(
             AppSuccess(true, 'Course fetched successfully', {
                 course: course.length ? course : 'No course found',
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in getting all courses', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in getting all courses',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -135,13 +170,22 @@ export const getCourseDetails = async (req, res, next) => {
             .exec();
 
         if (!course) {
-            return next(new AppError(false, 404, `Course not found by id: ${courseId}`));
+            return next(
+                new AppError(false, 404, `Course not found by id: ${courseId}`),
+            );
         }
 
-        return res.status(200).json(AppSuccess(true, 'Course fetched successfully', { course }));
+        return res
+            .status(200)
+            .json(AppSuccess(true, 'Course fetched successfully', { course }));
     } catch (err) {
         return next(
-            new AppError(false, 500, 'Error in getting course with the given id', err.message)
+            new AppError(
+                false,
+                500,
+                'Error in getting course with the given id',
+                err.message,
+            ),
         );
     }
 };

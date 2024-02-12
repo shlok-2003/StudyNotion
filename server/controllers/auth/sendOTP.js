@@ -26,9 +26,13 @@ const sendOTP = async (req, res, next) => {
 
         console.log(chalk.blue(`otpBody is: ${otpBody}`));
 
-        return res.status(200).json(AppSuccess(true, 'OTP sent successfully', { otpBody }));
+        return res
+            .status(200)
+            .json(AppSuccess(true, 'OTP sent successfully', { otpBody }));
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in sending OTP', err.message));
+        return next(
+            new AppError(false, 500, 'Error in sending OTP', err.message),
+        );
     }
 };
 

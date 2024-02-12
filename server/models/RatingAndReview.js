@@ -25,9 +25,12 @@ const RatingAndReviewSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 );
 
-const RatingAndReviews = mongoose.model('RatingAndReview', RatingAndReviewSchema);
+const RatingAndReviews = mongoose.model(
+    'RatingAndReview',
+    RatingAndReviewSchema,
+);
 
 export default RatingAndReviews;

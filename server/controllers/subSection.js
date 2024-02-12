@@ -26,7 +26,7 @@ export const createSubSection = async (req, res, next) => {
         const section = await Section.findByIdAndUpdate(
             { _id: sectionId },
             { $push: { subSection: subSection._id } },
-            { new: true }
+            { new: true },
         )
             .populate('subSection')
             .exec();
@@ -38,10 +38,17 @@ export const createSubSection = async (req, res, next) => {
         return res.status(201).json(
             AppSuccess(true, 'Sub-section created successfully', {
                 section,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating sub-section', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in creating sub-section',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -68,7 +75,10 @@ export const updateSubSection = async (req, res, next) => {
         if (req.files && req.files.video !== undefined) {
             const video = req.files.video;
 
-            const uploadDetails = await uploader(video, process.env.FOLDER_NAME);
+            const uploadDetails = await uploader(
+                video,
+                process.env.FOLDER_NAME,
+            );
             options.duration = uploadDetails.duration;
             options.video = uploadDetails.secure_url;
         }
@@ -76,7 +86,7 @@ export const updateSubSection = async (req, res, next) => {
         const updatedSubSection = await SubSection.findByIdAndUpdate(
             { _id: subSectionId },
             options,
-            { new: true }
+            { new: true },
         );
 
         //! no need to update the section as it contains only the ID of the subSection, which is same after update
@@ -84,10 +94,17 @@ export const updateSubSection = async (req, res, next) => {
         return res.status(200).json(
             AppSuccess(true, 'Sub-section updated successfully', {
                 subSection: updatedSubSection,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in updating sub-section', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in updating sub-section',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -96,7 +113,9 @@ export const deleteSubSection = async (req, res, next) => {
     try {
         const { sectionId, subSectionId } = req.body;
 
-        const subSection = await SubSection.findByIdAndRemove({ _id: subSectionId });
+        const subSection = await SubSection.findByIdAndRemove({
+            _id: subSectionId,
+        });
         if (!subSection) {
             return next(new AppError(false, 404, 'SubSection not found'));
         }
@@ -104,7 +123,7 @@ export const deleteSubSection = async (req, res, next) => {
         const section = await Section.findByIdAndUpdate(
             { _id: sectionId },
             { $pull: { subSection: subSectionId } },
-            { new: true }
+            { new: true },
         );
 
         if (!section) {
@@ -115,9 +134,16 @@ export const deleteSubSection = async (req, res, next) => {
             AppSuccess(true, 'Sub-section deleted successfully', {
                 section,
                 deleted_subSection: subSection,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in deleting sub-section', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in deleting sub-section',
+                err.message,
+            ),
+        );
     }
 };

@@ -11,10 +11,10 @@ import payment from './routes/payment.js';
 
 //? Required
 const app = express();
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true,
-};
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     credentials: true,
+// };
 const fileOptions = {
     useTempFiles: true,
     tempFileDir: '/tmp/',
@@ -24,7 +24,7 @@ const fileOptions = {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(morgan('dev'));
 app.use(fileUpload(fileOptions));
 
@@ -33,7 +33,7 @@ app.get('/', (req, res, next) => {
     res.send('Hello World');
 });
 
-const BASE_SERVER_URL = '/api/v1';
+const BASE_SERVER_URL = '/api';
 
 //? Routes
 app.use(`${BASE_SERVER_URL}/auth`, user);

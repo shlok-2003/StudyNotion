@@ -17,9 +17,13 @@ export const createCategory = async (req, res, next) => {
 
         return res
             .status(201)
-            .json(AppSuccess(true, 'Category created successfully', { category }));
+            .json(
+                AppSuccess(true, 'Category created successfully', { category }),
+            );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating category', err.message));
+        return next(
+            new AppError(false, 500, 'Error in creating category', err.message),
+        );
     }
 };
 
@@ -32,9 +36,18 @@ export const showAllCategory = async (req, res, next) => {
             })
             .exec();
 
-        return res.status(200).json(AppSuccess(true, 'All categories fetched', { category }));
+        return res
+            .status(200)
+            .json(AppSuccess(true, 'All categories fetched', { category }));
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in getting all category', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in getting all category',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -68,11 +81,16 @@ export const categoryPageDetails = async (req, res, next) => {
                 selectedCategory,
                 differentCategory,
                 sellingCourses,
-            })
+            }),
         );
     } catch (err) {
         return next(
-            new AppError(false, 500, 'Error in getting category page details', err.message)
+            new AppError(
+                false,
+                500,
+                'Error in getting category page details',
+                err.message,
+            ),
         );
     }
 };

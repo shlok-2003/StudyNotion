@@ -35,7 +35,10 @@ export const verifyToken = async (req, res, next) => {
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-            console.log(chalk.yellow('payload of the user (from token) is: '), decode);
+            console.log(
+                chalk.yellow('payload of the user (from token) is: '),
+                decode,
+            );
             req.user = decode; //? or should it be req.user = token
         } catch (err) {
             return next(new AppError(false, 401, 'Token is invalid'));
@@ -43,7 +46,14 @@ export const verifyToken = async (req, res, next) => {
 
         next();
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in verifying jwt token', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in verifying jwt token',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -55,7 +65,7 @@ export const updateRole = async (req, res, next) => {
         const user = await User.findByIdAndUpdate(
             { _id: id },
             { accountType: role },
-            { new: true }
+            { new: true },
         );
 
         if (!user) {
@@ -65,7 +75,9 @@ export const updateRole = async (req, res, next) => {
         const prevRole = req.user.role;
         const payload = await user.getPayload();
         const token = createToken(payload);
-        console.log(chalk.green(`Role updated from ${prevRole} to ${user.accountType}`));
+        console.log(
+            chalk.green(`Role updated from ${prevRole} to ${user.accountType}`),
+        );
 
         const TokenOptions = {
             expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days
@@ -79,10 +91,17 @@ export const updateRole = async (req, res, next) => {
                 AppSuccess(true, 'Role updated successfully', {
                     role: role,
                     user: user,
-                })
+                }),
             );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in updating role of the user', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in updating role of the user',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -95,7 +114,9 @@ export const isStudent = async (req, res, next) => {
         console.log(chalk.green(`Welcome to the student role`));
         next();
     } catch (err) {
-        return next(new AppError(false, 401, 'User cannot be verified as a student'));
+        return next(
+            new AppError(false, 401, 'User cannot be verified as a student'),
+        );
     }
 };
 
@@ -108,7 +129,9 @@ export const isAdmin = async (req, res, next) => {
         console.log(chalk.green(`Welcome to the admin role`));
         next();
     } catch (err) {
-        return next(new AppError(false, 401, 'User cannot be verified as a Admin'));
+        return next(
+            new AppError(false, 401, 'User cannot be verified as a Admin'),
+        );
     }
 };
 
@@ -121,6 +144,8 @@ export const isInstructor = async (req, res, next) => {
         console.log(chalk.green(`Welcome to the instructor role`));
         next();
     } catch (err) {
-        return next(new AppError(false, 401, 'User cannot be verified as a instructor'));
+        return next(
+            new AppError(false, 401, 'User cannot be verified as a instructor'),
+        );
     }
 };

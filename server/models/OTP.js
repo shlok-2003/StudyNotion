@@ -24,7 +24,7 @@ const OTPSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 );
 
 OTPSchema.pre('save', async function (next) {
@@ -34,10 +34,14 @@ OTPSchema.pre('save', async function (next) {
         const mailResponse = await mailSender(
             email,
             'Verification code for the StudyNotion App',
-            emailTemplate(otp)
+            emailTemplate(otp),
         );
 
-        console.log(chalk.green(`Email sent successfully\n mailResponse is: ${mailResponse}`));
+        console.log(
+            chalk.green(
+                `Email sent successfully\n mailResponse is: ${mailResponse}`,
+            ),
+        );
     } catch (err) {
         //! return
         console.log(chalk.red(`Error in sending verification email: ${err}`));

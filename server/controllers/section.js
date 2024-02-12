@@ -14,7 +14,7 @@ export const createSection = async (req, res, next) => {
         const course = await Course.findByIdAndUpdate(
             { _id: courseId },
             { $push: { content: section._id } },
-            { new: true }
+            { new: true },
         )
             .populate('content')
             .exec();
@@ -26,10 +26,12 @@ export const createSection = async (req, res, next) => {
         return res.status(201).json(
             AppSuccess(true, 'Section created successfully', {
                 course,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating section', err.message));
+        return next(
+            new AppError(false, 500, 'Error in creating section', err.message),
+        );
     }
 };
 
@@ -44,16 +46,18 @@ export const updateSection = async (req, res, next) => {
         const section = await Section.findByIdAndUpdate(
             { _id: sectionId },
             { sectionName },
-            { new: true }
+            { new: true },
         );
 
         return res.status(201).json(
             AppSuccess(true, 'Section created successfully', {
                 section,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating section', err.message));
+        return next(
+            new AppError(false, 500, 'Error in creating section', err.message),
+        );
     }
 };
 
@@ -73,7 +77,7 @@ export const deleteSection = async (req, res, next) => {
             course = await Course.findByIdAndUpdate(
                 { _id: courseId },
                 { $pull: { content: sectionId } },
-                { new: true }
+                { new: true },
             );
         }
 
@@ -81,9 +85,11 @@ export const deleteSection = async (req, res, next) => {
             AppSuccess(true, 'Section created successfully', {
                 section,
                 course: course ? course : 'No course found',
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating section', err.message));
+        return next(
+            new AppError(false, 500, 'Error in creating section', err.message),
+        );
     }
 };

@@ -12,7 +12,9 @@ const login = async (req, res, next) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return next(new AppError(false, 400, 'Please enter all the fields'));
+            return next(
+                new AppError(false, 400, 'Please enter all the fields'),
+            );
         }
 
         const user = await User.findOne({ email: email });
@@ -36,7 +38,9 @@ const login = async (req, res, next) => {
             .status(200)
             .json(AppSuccess(true, 'User logged in successfully', { token }));
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in logging in', err.message));
+        return next(
+            new AppError(false, 500, 'Error in logging in', err.message),
+        );
     }
 };
 

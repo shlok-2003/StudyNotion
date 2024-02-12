@@ -8,7 +8,7 @@ import {
     deleteProfile,
     getEnrolledCourses,
     updateDisplayPicture,
-    helper
+    helper,
 } from '../controllers/profile.js';
 
 // update profile

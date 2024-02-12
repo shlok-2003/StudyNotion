@@ -17,7 +17,7 @@ const SubSectionSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 );
 
 const SubSection = mongoose.model('SubSection', SubSectionSchema);

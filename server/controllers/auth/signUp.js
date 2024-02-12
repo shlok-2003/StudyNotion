@@ -29,7 +29,9 @@ const signUp = async (req, res, next) => {
             !contactNumber ||
             !otp
         ) {
-            return next(new AppError(false, 400, 'Please enter all the fields'));
+            return next(
+                new AppError(false, 400, 'Please enter all the fields'),
+            );
         }
 
         if (password !== confirmPassword) {
@@ -43,7 +45,9 @@ const signUp = async (req, res, next) => {
             return next(new AppError(false, 401, 'User already exists'));
         }
 
-        const recentOTP = await OTP.findOne({ email: email }).sort({ createdAt: -1 }).limit(1);
+        const recentOTP = await OTP.findOne({ email: email })
+            .sort({ createdAt: -1 })
+            .limit(1);
 
         if (!recentOTP || recentOTP.length == 0) {
             return next(new AppError(false, 401, 'OTP not found'));
@@ -82,10 +86,12 @@ const signUp = async (req, res, next) => {
             AppSuccess(true, 'User created successfully', {
                 user,
                 profile,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in signing up', err.message));
+        return next(
+            new AppError(false, 500, 'Error in signing up', err.message),
+        );
     }
 };
 
