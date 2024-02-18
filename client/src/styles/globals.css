@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -71,15 +70,27 @@
 
 @layer base {
     * {
-        @apply yborder-border;
+        @apply border-border;
     }
     body {
-        @apply ybg-background ytext-foreground;
+        @apply bg-background text-foreground;
     }
 }
 
 @layer components {
-    .txt-gradient-blue {
-        @apply bg-gradient-to-r from-gradient-blue-700 from-10% via-gradient-blue-700 via-70% to-gradient-green-500 to-100% bg-clip-text text-transparent;
+    /* .txt-gradient-blue {
+        @apply from- via-gradient-blue to-gradient-green bg-gradient-to-r from-10% via-70% to-100% bg-clip-text text-transparent;
+    } */
+
+    .custom-input-field {
+        @apply caret-rich-black-300 rounded-md p-2 text-xl max-sm:text-xs outline-none bg-rich-black-800 text-rich-black-200 font-medium;
+    }
+
+    .custom-no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none; 
+    }
+    .custom-no-scrollbar::-webkit-scrollbar {
+        display: none;
     }
 }
