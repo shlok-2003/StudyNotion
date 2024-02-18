@@ -184,6 +184,12 @@ export default {
                     sunset: 'bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent',
                     mood: 'bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent',
                 },
+                custom: {
+                    sun: '#FF512F',
+                    yellow: '#F09819',
+                    orange: '#E65C00',
+                    'light-yellow': '#F9D423',
+                },
             },
             borderRadius: {
                 lg: 'var(--radius)',
