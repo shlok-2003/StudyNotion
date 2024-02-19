@@ -93,4 +93,8 @@
     .custom-no-scrollbar::-webkit-scrollbar {
         display: none;
     }
+
+    form label {
+        @apply select-none;
+    }
 }
