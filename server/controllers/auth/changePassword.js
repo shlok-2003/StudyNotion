@@ -5,10 +5,13 @@ import { AppError, AppSuccess } from '../../utils/appHandler.js';
 
 const changePassword = async (req, res, next) => {
     try {
-        const { email, oldPassword, newPassword, confirmNewPassword } = req.body;
+        const { email, oldPassword, newPassword, confirmNewPassword } =
+            req.body;
 
         if (!email || !oldPassword || !newPassword || !confirmNewPassword) {
-            return next(new AppError(false, 400, 'Please enter all the fields'));
+            return next(
+                new AppError(false, 400, 'Please enter all the fields'),
+            );
         }
 
         const user = await User.findOne({ email });
@@ -30,16 +33,20 @@ const changePassword = async (req, res, next) => {
         const userWithPasswordUpdated = await User.findOneAndUpdate(
             { email },
             { password: newPassword },
-            { new: true }
+            { new: true },
         );
 
-        await mailSender(email, 'Password Changed Successfully', resetPassword());
+        await mailSender(
+            email,
+            'Password Changed Successfully',
+            resetPassword(),
+        );
 
         return res.status(200).json(
             AppSuccess(true, 'Password changed successfully', {
                 old_data: user.password,
                 new_data: userWithPasswordUpdated,
-            })
+            }),
         );
     } catch (err) {
         return next(new AppError(false, 500, 'Error in changing password'));

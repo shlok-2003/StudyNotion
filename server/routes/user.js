@@ -1,9 +1,17 @@
 import express from 'express';
 const router = express.Router();
 
-import { sendOTP, login, signUp, changePassword } from '../controllers/auth/index.js';
+import {
+    sendOTP,
+    login,
+    signUp,
+    changePassword,
+} from '../controllers/auth/index.js';
 import { verifyToken, updateRole } from '../middlewares/auth.js';
-import { resetPassword, resetPasswordToken } from '../controllers/resetPassword.js';
+import {
+    resetPassword,
+    resetPasswordToken,
+} from '../controllers/resetPassword.js';
 
 // For login
 router.post('/login', login);

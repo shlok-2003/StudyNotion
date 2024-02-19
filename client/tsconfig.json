@@ -20,10 +20,11 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
 
-        /* Other */
-        "baseUrl": "./",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": ["./src/*"],
+            "@components/core/*": ["./src/components/ui/core/*"],
+            "@components/common/*": ["./src/components/ui/common/*"]
         }
     },
     "include": ["src"],

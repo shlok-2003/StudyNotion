@@ -1,26 +1,32 @@
-import { 
+import {
     Route,
-    RouterProvider, 
+    RouterProvider,
     createBrowserRouter,
-    createRoutesFromChildren
-} from 'react-router-dom'
-import './styles/App.css'
+    createRoutesFromChildren,
+} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-import Main from './layouts/Main.tsx'
-import { Home, NotFound } from './pages'
-import Error from './components/error/index.tsx'
+import Main from '@/layouts/Main';
+import { About, Home, Contact, NotFound } from '@/pages';
+import React from 'react';
 
 const router = createBrowserRouter(
     createRoutesFromChildren(
-        <Route path='/' element={<Main/>} errorElement={<Error />} >
-            <Route index element={<Home/>} />
-            <Route path='*' element={<NotFound/>} />
-        </Route>
-    )
-)
+        <Route path="/" element={<Main />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+
+            <Route path="*" element={<NotFound />} />
+        </Route>,
+    ),
+);
 
 export default function App() {
     return (
-        <RouterProvider router={router} />
-    )
+        <React.Fragment>
+            <ToastContainer position="bottom-right" />
+            <RouterProvider router={router} />
+        </React.Fragment>
+    );
 }

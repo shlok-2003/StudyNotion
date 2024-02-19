@@ -21,21 +21,32 @@ export const resetPasswordToken = async (req, res, next) => {
         await User.findOneAndUpdate(
             { email },
             { token: token, resetPasswordExpires: Date.now() + 5 * 60 * 1000 },
-            { new: true }
+            { new: true },
         );
 
         //Generate Link for the frontend
         const link = `${process.env.FRONTEND_URL}/update-password/${token}`;
 
-        await mailSender(email, 'Password Reset', `Password reset link: ${link}`);
+        await mailSender(
+            email,
+            'Password Reset',
+            `Password reset link: ${link}`,
+        );
 
         return res.status(200).json(
             AppSuccess(true, 'Password reset link sent successfully', {
                 resetToken: token,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in sending reset password token', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in sending reset password token',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -44,7 +55,13 @@ export const resetPassword = async (req, res, next) => {
         const { token, password, confirmPassword } = req.body;
 
         if (password !== confirmPassword) {
-            return next(new AppError(false, 400, 'Password and Confirm Password Does not Match'));
+            return next(
+                new AppError(
+                    false,
+                    400,
+                    'Password and Confirm Password Does not Match',
+                ),
+            );
         }
 
         const userDetail = await User.findOne({ token: token });
@@ -59,15 +76,22 @@ export const resetPassword = async (req, res, next) => {
         const updatedUser = await User.findOneAndUpdate(
             { token: token },
             { password: password, token: null },
-            { new: true }
+            { new: true },
         );
 
         return res.status(200).json(
             AppSuccess(true, 'Password reset successfully', {
                 updatedUser,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in resetting password', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in resetting password',
+                err.message,
+            ),
+        );
     }
 };

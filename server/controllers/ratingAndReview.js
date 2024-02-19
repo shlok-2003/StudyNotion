@@ -23,7 +23,9 @@ export const createRatingAndReview = async (req, res, next) => {
         // });
 
         if (existingReview) {
-            return next(new AppError(false, 400, 'You have already given a review'));
+            return next(
+                new AppError(false, 400, 'You have already given a review'),
+            );
         }
 
         const newReview = await RatingAndReviews.create({
@@ -36,7 +38,7 @@ export const createRatingAndReview = async (req, res, next) => {
         const updatedCourse = await Course.findOneAndUpdate(
             { _id: courseId },
             { $push: { ratingAndReviews: newReview } },
-            { new: true }
+            { new: true },
         );
 
         if (!updatedCourse) {
@@ -47,10 +49,17 @@ export const createRatingAndReview = async (req, res, next) => {
             AppSuccess(true, 'Rating and review created successfully', {
                 review: newReview,
                 course: updatedCourse,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in creating rating and review', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in creating rating and review',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -83,37 +92,53 @@ export const getAverageRating = async (req, res, next) => {
         return res.status(200).json(
             AppSuccess(true, 'Average rating fetched successfully', {
                 averageRating: rating[0].avgRating,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in getting average rating', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in getting average rating',
+                err.message,
+            ),
+        );
     }
 };
 
 export const getAllRating = async (req, res, next) => {
     try {
         const rating = await RatingAndReviews.find({})
-            .sort({ rating: 1 })
-            .populate({
-                path: 'user',
-                select: 'firstName lastName email image',
-            })
-            .populate({
-                path: 'course',
-                select: 'name',
-            })
-            .exec();
+        .sort({ rating: 1 })
+        .populate({
+            path: 'user',
+            select: 'firstName lastName email image',
+        })
+        .populate({
+            path: 'course',
+            select: 'name',
+        })
+        .exec();
 
-        if (!rating.length) {
-            return next(new AppError(false, 400, 'No rating found'));
-        }
+        console.log(rating);
+
+        // if (rating.length === 0) {
+        //     return next(new AppError(false, 400, 'No rating found'));
+        // }
 
         return res.status(200).json(
             AppSuccess(true, 'All rating fetched successfully', {
                 rating,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in getting all rating', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in getting all rating',
+                err.message,
+            ),
+        );
     }
 };

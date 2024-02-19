@@ -1,11 +1,32 @@
 import express from 'express';
 const router = express.Router();
 
-import { verifyToken, isInstructor, isAdmin, isStudent } from '../middlewares/auth.js';
-import { createCourse, getAllCourse, getCourseDetails } from '../controllers/course.js';
-import { createSection, deleteSection, updateSection } from '../controllers/section.js';
-import { createSubSection, updateSubSection, deleteSubSection } from '../controllers/subSection.js';
-import { categoryPageDetails, createCategory, showAllCategory } from '../controllers/category.js';
+import {
+    verifyToken,
+    isInstructor,
+    isAdmin,
+    isStudent,
+} from '../middlewares/auth.js';
+import {
+    createCourse,
+    getAllCourse,
+    getCourseDetails,
+} from '../controllers/course.js';
+import {
+    createSection,
+    deleteSection,
+    updateSection,
+} from '../controllers/section.js';
+import {
+    createSubSection,
+    updateSubSection,
+    deleteSubSection,
+} from '../controllers/subSection.js';
+import {
+    categoryPageDetails,
+    createCategory,
+    showAllCategory,
+} from '../controllers/category.js';
 import {
     createRatingAndReview,
     getAllRating,
@@ -39,7 +60,12 @@ router.post('/create-subsection', verifyToken, isInstructor, createSubSection);
 router.put('/update-subsection', verifyToken, isInstructor, updateSubSection);
 
 // delete a sub-section
-router.delete('/delete-subsection', verifyToken, isInstructor, deleteSubSection);
+router.delete(
+    '/delete-subsection',
+    verifyToken,
+    isInstructor,
+    deleteSubSection,
+);
 
 //! ------> For admins
 

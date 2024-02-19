@@ -19,9 +19,11 @@ export const getUserDetails = async (req, res, next) => {
             return next(new AppError(false, 404, 'User not found'));
         }
 
-        return res
-            .status(200)
-            .json(AppSuccess(true, 'User details fetched successfully', { userDetails }));
+        return res.status(200).json(
+            AppSuccess(true, 'User details fetched successfully', {
+                userDetails,
+            }),
+        );
     } catch (err) {
         return res.status(500).json({
             success: false,
@@ -46,14 +48,18 @@ export const updateProfile = async (req, res, next) => {
         const profileDetail = await Profile.findByIdAndUpdate(
             { _id: profileId },
             { gender, dob, about, contactNumber },
-            { new: true }
+            { new: true },
         );
 
-        return res
-            .status(200)
-            .json(AppSuccess(true, 'Profile updated successfully', { profileDetail }));
+        return res.status(200).json(
+            AppSuccess(true, 'Profile updated successfully', {
+                profileDetail,
+            }),
+        );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in updating profile', err.message));
+        return next(
+            new AppError(false, 500, 'Error in updating profile', err.message),
+        );
     }
 };
 
@@ -71,9 +77,18 @@ export const deleteProfile = async (req, res, next) => {
         await user.deleteData();
         await User.findByIdAndDelete(user._id);
 
-        return res.status(200).json(AppSuccess(true, 'Profile and user deleted successfully'));
+        return res
+            .status(200)
+            .json(AppSuccess(true, 'Profile and user deleted successfully'));
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in deleting profile and user', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in deleting profile and user',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -81,20 +96,30 @@ export const getEnrolledCourses = async (req, res, next) => {
     try {
         const id = req.user.id;
 
-        const user = await User.findById({ id }, { firstName: true, courses: true }).populate({
+        const user = await User.findById(
+            { id },
+            { firstName: true, courses: true },
+        ).populate({
             path: 'courses',
         });
         if (!user) {
             return next(new AppError(false, 404, 'User not found'));
         }
 
-        return res
-            .status(200)
-            .json(
-                AppSuccess(true, 'Courses enrolled fetched successfully', { courses: user.courses })
-            );
+        return res.status(200).json(
+            AppSuccess(true, 'Courses enrolled fetched successfully', {
+                courses: user.courses,
+            }),
+        );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in fetching enrolled courses', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in fetching enrolled courses',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -110,16 +135,23 @@ export const updateDisplayPicture = async (req, res, next) => {
         const user = await User.findByIdAndUpdate(
             { id },
             { image: uploadDetails.secure_url },
-            { new: true }
+            { new: true },
         );
 
-        return res
-            .status(200)
-            .json(
-                AppSuccess(true, 'Courses enrolled fetched successfully', { courses: user.courses })
-            );
+        return res.status(200).json(
+            AppSuccess(true, 'Courses enrolled fetched successfully', {
+                courses: user.courses,
+            }),
+        );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in updating display picture', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in updating display picture',
+                err.message,
+            ),
+        );
     }
 };
 
@@ -131,18 +163,28 @@ export const helper = async (req, res, next) => {
         const userEnrollment = await User.findByIdAndUpdate(
             { _id: userId },
             { $push: { courses: course } },
-            { new: true }
-        )
+            { new: true },
+        );
 
         const courseEnrollment = await Course.findByIdAndUpdate(
             { _id: course },
-            { $push: { studentsEnrolled: userId } }
-        )   
+            { $push: { studentsEnrolled: userId } },
+        );
 
         return res.status(200).json(
-            AppSuccess(true, 'Enrolled in course successfully', { userEnrollment, courseEnrollment  })
-        )
+            AppSuccess(true, 'Enrolled in course successfully', {
+                userEnrollment,
+                courseEnrollment,
+            }),
+        );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in enrolling in course', err.message));
+        return next(
+            new AppError(
+                false,
+                500,
+                'Error in enrolling in course',
+                err.message,
+            ),
+        );
     }
-}
+};

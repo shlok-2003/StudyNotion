@@ -1,15 +1,16 @@
-import { Fragment } from 'react';
+import React from 'react';
+
 import { Outlet } from 'react-router';
-import { Header, Footer } from '@/components/common/';
+import { Header, Footer } from '@components/core/index';
 
 export default function Main() {
     return (
-        <Fragment>
+        <main className="relative">
             <Header />
-            <main>
+            <main className="[&>*]:font-sans">
                 <Outlet />
             </main>
             <Footer />
-        </Fragment>
+        </main>
     );
 }

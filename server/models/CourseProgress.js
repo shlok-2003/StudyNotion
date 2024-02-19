@@ -15,7 +15,7 @@ const CourseProgressSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 );
 
 const CourseProgress = mongoose.model('CourseProgress', CourseProgressSchema);

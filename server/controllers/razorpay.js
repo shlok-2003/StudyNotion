@@ -27,10 +27,18 @@ export const capturePayment = async (req, res, next) => {
         const hasUserEnrolled = course.studentsEnrolled.includes(uid);
 
         if (hasUserEnrolled) {
-            return next(new AppError(false, 400, 'You have already enrolled in this course'));
+            return next(
+                new AppError(
+                    false,
+                    400,
+                    'You have already enrolled in this course',
+                ),
+            );
         }
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in capturing payment', err.message));
+        return next(
+            new AppError(false, 500, 'Error in capturing payment', err.message),
+        );
     }
 
     const OrderOptions = {
@@ -53,10 +61,12 @@ export const capturePayment = async (req, res, next) => {
                 thumbnail: course.thumbnail,
                 razorpayOptions: options,
                 paymentResponse: paymentResponse,
-            })
+            }),
         );
     } catch (err) {
-        return next(new AppError(false, 500, 'Error in capturing payment', err.message));
+        return next(
+            new AppError(false, 500, 'Error in capturing payment', err.message),
+        );
     }
 };
 
@@ -78,7 +88,7 @@ export const verifySignature = async (req, res, next) => {
             const courseEnrolled = await Course.findByIdAndUpdate(
                 { courseId },
                 { $push: { studentsEnrolled: userId } },
-                { new: true }
+                { new: true },
             );
 
             if (!courseEnrolled) {
@@ -88,23 +98,33 @@ export const verifySignature = async (req, res, next) => {
             const enrolledStudent = await User.findByIdAndUpdate(
                 { userId },
                 { $push: { courses: courseId } },
-                { new: true }
+                { new: true },
             );
 
             await mailSender(
                 enrolledStudent.email,
                 'Congratulations on enrolling in the course',
-                courseEnrollmentTemplate(courseEnrolled.name, enrolledStudent.name)
+                courseEnrollmentTemplate(
+                    courseEnrolled.name,
+                    enrolledStudent.name,
+                ),
             );
 
             return res.status(200).json(
                 AppSuccess(true, 'Course and payment is done', {
                     course: courseEnrolled,
                     user: enrolledStudent,
-                })
+                }),
             );
         } catch (err) {
-            return next(new AppError(false, 500, 'Error in capturing payment', err.message));
+            return next(
+                new AppError(
+                    false,
+                    500,
+                    'Error in capturing payment',
+                    err.message,
+                ),
+            );
         }
     } else {
         return next(new AppError(false, 400, 'Payment is not authorised'));
