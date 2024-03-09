@@ -36,7 +36,12 @@ const login = async (req, res, next) => {
         return res
             .cookie('token', token, cookieOptions)
             .status(200)
-            .json(AppSuccess(true, 'User logged in successfully', { token }));
+            .json(
+                AppSuccess(true, 'User logged in successfully', {
+                    user,
+                    token,
+                }),
+            );
     } catch (err) {
         return next(
             new AppError(false, 500, 'Error in logging in', err.message),

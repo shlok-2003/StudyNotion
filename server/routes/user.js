@@ -26,10 +26,10 @@ router.post('/send-otp', sendOTP);
 router.post('/change-password', verifyToken, changePassword);
 
 // Reset Password
-router.post('/reset-password', resetPasswordToken);
+router.post('/reset-password-token', resetPasswordToken);
 
 // Update Password
-router.post('/update-password', resetPassword);
+router.post('/reset-password', resetPassword);
 
 // For updating role
 router.post('/update-role', verifyToken, updateRole);
