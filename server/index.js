@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
+
 
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
@@ -21,7 +23,8 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());	
+app.use(cors());
+app.use(morgan("dev"));	
 
 app.use(
 	fileUpload({
