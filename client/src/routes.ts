@@ -1,14 +1,18 @@
-import { Main } from '@/layouts';
-import { Home, NotFound, About, Contact } from '@/pages';
+import { RouteObject } from 'react-router-dom';
+import { Main, Dashboard } from '@/layouts';
+import {
+    Home,
+    NotFound,
+    About,
+    Contact,
+    Login,
+    SignUp,
+    Verify,
+    NewPassword,
+    ResetPassword,
+} from '@/pages';
 
-export interface RouteProps {
-    path: string;
-    index?: boolean | undefined;
-    element: React.ReactNode;
-    children?: Array<RouteProps>;
-}
-
-const routes: Array<RouteProps> = [
+const routes: RouteObject[] = [
     {
         path: '/',
         element: typeof Main,
@@ -16,10 +20,7 @@ const routes: Array<RouteProps> = [
             {
                 path: '/',
                 element: typeof Home,
-            },
-            {
-                path: '*',
-                element: typeof NotFound,
+                index: true,
             },
             {
                 path: '/about',
@@ -29,7 +30,35 @@ const routes: Array<RouteProps> = [
                 path: '/contact',
                 element: typeof Contact,
             },
+            {
+                path: '/login',
+                element: typeof Login,
+            },
+            {
+                path: '/signup',
+                element: typeof SignUp,
+            },
+            {
+                path: '/verify',
+                element: typeof Verify,
+            },
+            {
+                path: '/forgot-password',
+                element: typeof NewPassword,
+            },
+            {
+                path: '/reset-password',
+                element: typeof ResetPassword,
+            },
+            {
+                path: '*',
+                element: typeof NotFound,
+            },
         ],
+    },
+    {
+        path: '/dashboard',
+        element: typeof Dashboard,
     },
 ];
 
@@ -95,7 +124,12 @@ const navLink: Array<linkProps> = [
     },
 ];
 
-const footerLink = [
+interface footerLinkProps {
+    name: string;
+    children: Array<linkProps>;
+}
+
+const footerLink: Array<footerLinkProps> = [
     {
         name: 'Subjects',
         children: [

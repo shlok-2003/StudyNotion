@@ -1,4 +1,26 @@
-Formik
 Redux
 Redux-toolkit
 testing
+
+// This are the results of the lighthouse audit
+
+Largest Contentful Paint element 10,770 ms
+Enable text compression Potential savings of 7,626 KiB
+Reduce unused JavaScript Potential savings of 6,209 KiB
+Minify JavaScript Potential savings of 1,858 KiB
+Preconnect to required origins Potential savings of 80 ms
+Minify CSS Potential savings of 3 KiB
+Image elements do not have explicit width and height
+Remove duplicate modules in JavaScript bundles Potential savings of 1 KiB
+Avoid serving legacy JavaScript to modern browsers Potential savings of 1 KiB
+Page prevented back/forward cache restoration 2 failure reasons
+Avoid enormous network payloads Total size was 9,913 KiB
+Minimize main-thread work 2.4 s
+Avoid large layout shifts 1 element found
+User Timing marks and measures 4 user timings
+Initial server response time was short Root document took 10 ms
+Avoids an excessive DOM size 600 elements
+Avoid chaining critical requests 86 chains found
+JavaScript execution time 0.9 s
+Minimize third-party usage Third-party code blocked the main thread for 0 ms
+Avoid long main-thread tasks 2 long tasks found

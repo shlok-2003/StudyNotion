@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -27,6 +28,9 @@ export default {
         },
 
         extend: {
+            screens: {
+                xs: '400px',
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
@@ -212,5 +216,5 @@ export default {
             },
         },
     },
-    plugins: [import('tailwindcss-animate')],
+    plugins: [tailwindcssAnimate],
 };

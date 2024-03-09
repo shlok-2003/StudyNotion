@@ -26,7 +26,7 @@ const signUp = async (req, res, next) => {
             !password ||
             !confirmPassword ||
             !accountType ||
-            !contactNumber ||
+            // !contactNumber ||
             !otp
         ) {
             return next(

@@ -1,46 +1,108 @@
 import { ACCOUNT_TYPE } from '@/lib/constants';
-const sidebarLinks = [
+import { IconType } from 'react-icons/lib';
+import {
+    VscAccount,
+    VscHistory,
+    VscAdd,
+    VscDashboard,
+    VscMortarBoard,
+    VscVm,
+    VscBook,
+    VscCallOutgoing,
+} from '@/icons';
+export interface DashboardLinkProps {
+    name: string;
+    path: string;
+    icon?: IconType;
+    type?: string;
+    children?: DashboardLinkProps[];
+}
+
+const sidebarLinks: DashboardLinkProps[] = [
     {
-        id: 1,
         name: 'My Profile',
         path: '/dashboard/my-profile',
-        icon: 'VscAccount',
+        icon: VscAccount,
     },
     {
-        id: 2,
-        name: 'Dashboard',
+        name: 'Instructor Board',
         path: '/dashboard/instructor',
         type: ACCOUNT_TYPE.INSTRUCTOR,
-        icon: 'VscDashboard',
+        icon: VscDashboard,
     },
     {
-        id: 3,
         name: 'My Courses',
         path: '/dashboard/my-courses',
         type: ACCOUNT_TYPE.INSTRUCTOR,
-        icon: 'VscVm',
+        icon: VscVm,
     },
     {
-        id: 4,
         name: 'Add Course',
         path: '/dashboard/add-course',
         type: ACCOUNT_TYPE.INSTRUCTOR,
-        icon: 'VscAdd',
+        icon: VscAdd,
     },
     {
-        id: 5,
         name: 'Enrolled Courses',
         path: '/dashboard/enrolled-courses',
         type: ACCOUNT_TYPE.STUDENT,
-        icon: 'VscMortarBoard',
+        icon: VscMortarBoard,
     },
     {
-        id: 6,
         name: 'Purchase History',
         path: '/dashboard/purchase-history',
         type: ACCOUNT_TYPE.STUDENT,
-        icon: 'VscHistory',
+        icon: VscHistory,
     },
 ];
 
+const mobileSidebarLink: DashboardLinkProps[] = [
+    ...sidebarLinks,
+    {
+        path: '/catalog',
+        name: 'Catalog',
+        icon: VscBook,
+        children: [
+            {
+                path: '/blockchain',
+                name: 'Blockchain',
+            },
+            {
+                path: '/android',
+                name: 'Android',
+            },
+            {
+                path: '/web-development',
+                name: 'Web Development',
+            },
+            {
+                path: '/data-science',
+                name: 'Data Science',
+            },
+            {
+                path: '/ai',
+                name: 'Artificial Intelligence',
+            },
+            {
+                path: '/dsa',
+                name: 'Data Structures and Algorithms',
+            },
+            {
+                path: '/devops',
+                name: 'DevOps',
+            },
+            {
+                path: '/ml',
+                name: 'Machine Learning',
+            },
+        ],
+    },
+    {
+        path: '/contact',
+        name: 'Contact Us',
+        icon: VscCallOutgoing,
+    },
+];
+
+export { mobileSidebarLink };
 export default sidebarLinks;
